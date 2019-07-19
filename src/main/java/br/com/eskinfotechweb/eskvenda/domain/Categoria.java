@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "categorias")
 public class Categoria implements Serializable {
@@ -21,6 +23,7 @@ public class Categoria implements Serializable {
 	private Long id;
 	private String nome;
 
+	@JsonIgnoreProperties("categorias")
 	@ManyToMany(mappedBy = "categorias")
 	List<Produto> produtos = new ArrayList<>();
 
