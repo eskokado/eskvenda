@@ -3,6 +3,7 @@ package br.com.eskinfotechweb.eskvenda.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,12 @@ public class ProdutoService {
 		produto.setId(null);
 		Produto produtoInsert = produtoRepository.save(produto);
 		return produtoInsert;
+	}
+	
+	public Produto update(Long id, Produto produto) {
+		Produto produtoUpdate = findById(id);
+		BeanUtils.copyProperties(produto, produtoUpdate, "id");
+		
+		return produtoRepository.save(produtoUpdate);
 	}
 }
