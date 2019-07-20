@@ -5,10 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.eskinfotechweb.eskvenda.domain.Produto;
 import br.com.eskinfotechweb.eskvenda.repositories.ProdutoRepository;
+import br.com.eskinfotechweb.eskvenda.services.exceptions.DataIntegrityException;
 import br.com.eskinfotechweb.eskvenda.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -38,5 +40,16 @@ public class ProdutoService {
 		BeanUtils.copyProperties(produto, produtoUpdate, "id");
 		
 		return produtoRepository.save(produtoUpdate);
+	}
+	
+	public void delete(Long id) {
+		Produto produto = findById(id);
+		try {
+			produtoRepository.delete(produto);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir um produto que possui categoria! Id: " + id
+					+ ", Tipo: " + Produto.class.getName());
+		}
 	}
 }
