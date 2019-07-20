@@ -25,4 +25,10 @@ public class ProdutoService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
 	}
+	
+	public Produto insert(Produto produto) {
+		produto.setId(null);
+		Produto produtoInsert = produtoRepository.save(produto);
+		return produtoInsert;
+	}
 }
