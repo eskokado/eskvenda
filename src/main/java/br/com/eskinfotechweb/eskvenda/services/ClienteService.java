@@ -26,4 +26,11 @@ public class ClienteService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
+	public Cliente insert(Cliente cliente) {
+		cliente.setId(null);
+		cliente.getEnderecos().forEach(e -> e.setCliente(cliente));
+		Cliente clienteInsert = clienteRepository.save(cliente);		
+		return clienteInsert;
+	}
+
 }

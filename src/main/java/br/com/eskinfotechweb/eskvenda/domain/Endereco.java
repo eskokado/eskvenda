@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "enderecos")
@@ -22,10 +23,12 @@ public class Endereco {
 	private String bairro;
 	private String cep;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "cidade_id")
 	private Cidade cidade;
 
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
