@@ -3,6 +3,7 @@ package br.com.eskinfotechweb.eskvenda.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +30,19 @@ public class ClienteService {
 	public Cliente insert(Cliente cliente) {
 		cliente.setId(null);
 		cliente.getEnderecos().forEach(e -> e.setCliente(cliente));
-		Cliente clienteInsert = clienteRepository.save(cliente);		
+		Cliente clienteInsert = clienteRepository.save(cliente);
 		return clienteInsert;
+	}
+
+	public Cliente update(Long id, Cliente cliente) {
+		Cliente clienteUpdate = findById(id);
+
+		clienteUpdate.getEnderecos().clear();
+		clienteUpdate.getEnderecos().addAll(cliente.getEnderecos());
+		clienteUpdate.getEnderecos().forEach(e -> e.setCliente(clienteUpdate));
+
+		BeanUtils.copyProperties(cliente, clienteUpdate, "id", "enderecos");
+		return clienteRepository.save(clienteUpdate);
 	}
 
 }
