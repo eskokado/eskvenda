@@ -16,11 +16,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.eskinfotechweb.eskvenda.domain.enums.TipoCliente;
 
 @Entity
 @Table(name = "clientes")
-public class Cliente implements Serializable{
+public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -29,14 +31,15 @@ public class Cliente implements Serializable{
 
 	private String nome;
 	private String email;
-	
+
 	@Column(name = "cpf_ou_cnpj")
 	private String cpfOuCnpj;
 	private Integer tipo;
-	
+
+	@JsonIgnoreProperties("cliente")
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
-	
+
 	@ElementCollection
 	@CollectionTable(name = "telefones")
 	private Set<String> telefones = new HashSet<>();
@@ -90,6 +93,22 @@ public class Cliente implements Serializable{
 
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo.getCod();
+	}
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
+
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
 	}
 
 	@Override
