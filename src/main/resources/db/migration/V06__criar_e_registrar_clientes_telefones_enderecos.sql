@@ -36,7 +36,7 @@ CREATE TABLE enderecos (
   cidade_id BIGINT(20) DEFAULT NULL,
   FOREIGN KEY (cliente_id) REFERENCES clientes(id),
   FOREIGN KEY (cidade_id) REFERENCES cidades(id)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 INSERT INTO enderecos (id, logradouro, numero, complemento, bairro, cep, cliente_id, cidade_id)
 VALUES
