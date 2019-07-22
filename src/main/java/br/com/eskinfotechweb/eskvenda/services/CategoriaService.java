@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.eskinfotechweb.eskvenda.domain.Categoria;
+import br.com.eskinfotechweb.eskvenda.dto.CategoriaDTO;
 import br.com.eskinfotechweb.eskvenda.repositories.CategoriaRepository;
 import br.com.eskinfotechweb.eskvenda.services.exceptions.DataIntegrityException;
 import br.com.eskinfotechweb.eskvenda.services.exceptions.ObjectNotFoundException;
@@ -51,4 +52,9 @@ public class CategoriaService {
 					+ ", Tipo: " + Categoria.class.getName());
 		}
 	}
+
+	public Categoria fromDTO(CategoriaDTO objDTO) {
+		return new Categoria(objDTO.getId(), objDTO.getNome());
+	}
+
 }
