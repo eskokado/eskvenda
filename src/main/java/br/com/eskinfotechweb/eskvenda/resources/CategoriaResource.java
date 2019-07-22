@@ -2,6 +2,7 @@ package br.com.eskinfotechweb.eskvenda.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.eskinfotechweb.eskvenda.domain.Categoria;
+import br.com.eskinfotechweb.eskvenda.dto.CategoriaDTO;
 import br.com.eskinfotechweb.eskvenda.services.CategoriaService;
 
 @RestController
@@ -30,9 +32,10 @@ public class CategoriaResource {
 	private CategoriaService categoriaService;
 	
 	@GetMapping
-	public ResponseEntity<List<Categoria>> findAll() {
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		List<Categoria> categorias = categoriaService.findAll();
-		return ResponseEntity.ok(categorias);
+		List<CategoriaDTO> categoriasDTO = categorias.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok(categoriasDTO);
 	}
 	
 	@GetMapping("/{id}")
