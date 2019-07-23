@@ -24,6 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.eskinfotechweb.eskvenda.domain.Cliente;
 import br.com.eskinfotechweb.eskvenda.dto.ClienteDTO;
+import br.com.eskinfotechweb.eskvenda.dto.ClienteNewDTO;
 import br.com.eskinfotechweb.eskvenda.services.ClienteService;
 
 @RestController
@@ -64,7 +65,7 @@ public class ClienteResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Cliente> create(@Valid @RequestBody ClienteDTO clienteDto) {
+	public ResponseEntity<Cliente> create(@Valid @RequestBody ClienteNewDTO clienteDto) {
 		Cliente clienteInsert = clienteService.fromDTO(clienteDto) ;
 		clienteInsert = clienteService.insert(clienteInsert);
 
