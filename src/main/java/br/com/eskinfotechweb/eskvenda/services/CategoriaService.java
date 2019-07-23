@@ -46,7 +46,7 @@ public class CategoriaService {
 
 	public Categoria update(Long id, Categoria categoria) {
 		Categoria categoriaUpdate = findById(id);
-		BeanUtils.copyProperties(categoria, categoriaUpdate, "id");
+		BeanUtils.copyProperties(categoria, categoriaUpdate, "id", "produtos");
 
 		return categoriaRepository.save(categoriaUpdate);
 	}

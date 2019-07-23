@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "produtos")
 public class Produto implements Serializable {
@@ -32,7 +34,8 @@ public class Produto implements Serializable {
 	private String nome;
 	
 	private Double preco;
-	
+
+	@JsonIgnoreProperties("produtos")
 	@ManyToMany
 	@JoinTable(name = "produtos_categorias",
 			joinColumns = @JoinColumn(name = "produto_id"),
