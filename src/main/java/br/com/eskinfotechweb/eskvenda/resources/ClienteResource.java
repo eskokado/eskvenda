@@ -33,6 +33,12 @@ public class ClienteResource {
 	@Autowired
 	private ClienteService clienteService;
 
+	@GetMapping("/conf")
+	public ResponseEntity<List<Cliente>> findConf() {
+		List<Cliente> clientes = clienteService.findAll();
+		return ResponseEntity.ok(clientes);
+	}
+
 	@GetMapping
 	public ResponseEntity<List<ClienteDTO>> findAll() {
 		List<Cliente> clientes = clienteService.findAll();
@@ -43,7 +49,7 @@ public class ClienteResource {
 	@GetMapping("/{id}")
 	public ResponseEntity<Cliente> findById(@PathVariable Long id) {
 		Cliente cliente = clienteService.findById(id);
-		return ResponseEntity.ok(cliente);
+		return ResponseEntity.ok().body(cliente);
 	}
 
 	@GetMapping("/page")

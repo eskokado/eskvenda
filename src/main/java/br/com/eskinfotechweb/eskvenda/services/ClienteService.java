@@ -3,7 +3,6 @@ package br.com.eskinfotechweb.eskvenda.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -47,13 +46,14 @@ public class ClienteService {
 
 	public Cliente update(Long id, Cliente cliente) {
 		Cliente clienteUpdate = findById(id);
+		updateData(clienteUpdate, cliente);
+		return clienteRepository.save(clienteUpdate);		
+//		clienteUpdate.getEnderecos().clear();
+//		clienteUpdate.getEnderecos().addAll(cliente.getEnderecos());
+//		clienteUpdate.getEnderecos().forEach(e -> e.setCliente(clienteUpdate));
 
-		clienteUpdate.getEnderecos().clear();
-		clienteUpdate.getEnderecos().addAll(cliente.getEnderecos());
-		clienteUpdate.getEnderecos().forEach(e -> e.setCliente(clienteUpdate));
-
-		BeanUtils.copyProperties(cliente, clienteUpdate, "id", "enderecos");
-		return clienteRepository.save(clienteUpdate);
+//		BeanUtils.copyProperties(cliente, clienteUpdate, "id", "enderecos");
+//		return clienteRepository.save(clienteUpdate);
 	}
 
 	public void delete(Long id) {
@@ -68,5 +68,10 @@ public class ClienteService {
 
 	public Cliente fromDTO(ClienteDTO clienteDto) {
 		return new Cliente(clienteDto.getId(), clienteDto.getNome(), clienteDto.getEmail(), null, null);
+	}
+	
+	private void updateData(Cliente newCliente, Cliente cliente) {
+		newCliente.setNome(cliente.getNome());
+		newCliente.setEmail(cliente.getEmail());
 	}
 }
