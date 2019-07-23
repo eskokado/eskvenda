@@ -61,8 +61,8 @@ public class CategoriaService {
 		}
 	}
 
-	public Categoria fromDTO(CategoriaDTO objDTO) {
-		return new Categoria(objDTO.getId(), objDTO.getNome());
+	public Categoria fromDTO(CategoriaDTO categoriaDTO) {
+		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
 	}
 
 }
