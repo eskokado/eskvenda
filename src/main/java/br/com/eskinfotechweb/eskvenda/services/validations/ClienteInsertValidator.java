@@ -6,12 +6,20 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.eskinfotechweb.eskvenda.domain.Cliente;
 import br.com.eskinfotechweb.eskvenda.domain.enums.TipoCliente;
 import br.com.eskinfotechweb.eskvenda.dto.ClienteNewDTO;
+import br.com.eskinfotechweb.eskvenda.repositories.ClienteRepository;
 import br.com.eskinfotechweb.eskvenda.resources.exceptions.FieldMessage;
 import br.com.eskinfotechweb.eskvenda.services.validations.utils.BR;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
 	@Override
 	public void initialize(ClienteInsert ann) {
 	}
@@ -31,6 +39,11 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 			list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
 		}
 
+		Cliente clienteAux = clienteRepository.findByEmail(clienteDto.getEmail());
+		if (clienteAux != null) {
+			list.add(new FieldMessage("email", "Email já existente"));
+		}
+				
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
