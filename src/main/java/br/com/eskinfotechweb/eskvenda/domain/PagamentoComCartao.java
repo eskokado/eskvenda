@@ -3,10 +3,13 @@ package br.com.eskinfotechweb.eskvenda.domain;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import br.com.eskinfotechweb.eskvenda.domain.enums.EstadoPagamento;
 
 @Entity
 @Table(name = "pagamentos_com_cartao")
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento {
 	private static final long serialVersionUID = 1L;
 

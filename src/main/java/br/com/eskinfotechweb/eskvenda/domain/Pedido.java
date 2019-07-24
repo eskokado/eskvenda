@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -31,9 +32,11 @@ public class Pedido implements Serializable{
 	
 	private LocalDate instante;
 
+	@JsonIgnoreProperties("pedido")
 	@OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private Pagamento pagamento;
 
+	@JsonIgnoreProperties(value = {"pedidos", "enderecos"})
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
@@ -43,6 +46,7 @@ public class Pedido implements Serializable{
 	@JoinColumn(name = "endereco_de_entrega_id")
 	private Endereco enderecoDeEntrega;
 
+	// @JsonIgnoreProperties(value = {"id"})
 	@OneToMany(mappedBy = "id.pedido")
 	private Set<ItemPedido> itens = new HashSet<>();
 	
@@ -65,6 +69,7 @@ public class Pedido implements Serializable{
 		return soma;
 	}
 	
+	@JsonIgnore
 	public List<Produto> getProdutos() {
 		List<Produto> lista = new ArrayList<>();
 		for (ItemPedido x : itens) {

@@ -54,7 +54,7 @@ public class Cliente implements Serializable {
 	@CollectionTable(name = "telefones")
 	private Set<String> telefones = new HashSet<>();
 
-	@JsonIgnoreProperties("cliente")
+	@JsonIgnoreProperties(value = {"cliente", "itens"})
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	

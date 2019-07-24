@@ -11,18 +11,23 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import br.com.eskinfotechweb.eskvenda.domain.enums.EstadoPagamento;
 
 @Entity
 @Table(name = "pagamentos")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Pagamento implements Serializable{
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+public abstract class Pagamento implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private Long id;
 	private Integer estado;
 
+	@JsonIgnoreProperties(value = {"itens"})
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId
